@@ -1,0 +1,72 @@
+---
+title: "TowardsOpenScience"
+author: "me"
+date: "28 10 2020"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+```{r,echo=FALSE}
+#read data into table
+data <- read.csv('C:/Users/49162/Documents/studium/5. Semester/openScience/articles_corpus.csv',header=TRUE,sep=";")
+data
+```
+```{r}
+# to make sure there are no duplicates among the articles
+# as this would disturb the purpose of the study
+duplicated(data$article.name)
+
+# amount of articles (out of 45) that transparently provide open access to all data
+data %>% filter(open.data=="YES") %>% count
+
+# amount of articles with transparent open access in the domain of 
+# Cognitive Psychology, Cognitive Neuroscience and Artificial Intelligence respectively
+psy_yes <- data %>% filter(category=="Cognitive Psychology",open.data=="YES") %>% count
+psy_part <- data %>% filter(category=="Cognitive Psychology",open.data=="upon request") %>% count
+psy_no <- data %>% filter(category=="Cognitive Psychology",open.data=="unclear") %>% count
+
+neuro_yes <-data %>% filter(category=="Cognitive Neuroscience",open.data=="YES") %>% count
+neuro_part <- data %>% filter(category=="Cognitive Neuroscience",open.data=="upon request") %>% count
+neuro_no <- data %>% filter(category=="Cognitive Neuroscience",open.data=="unclear") %>% count
+
+ai_yes <- data %>% filter(category=="Artificial Intelligence",open.data=="YES") %>% count
+ai_part <- data %>% filter(category=="Artificial Intelligence",open.data=="upon request") %>% count
+ai_no <- data %>% filter(category=="Artificial Intelligence",open.data=="unclear") %>% count
+
+ # amount of articles with transparent open access before and after 2014
+data %>% filter(published<2014) %>% count
+data %>% filter(published<2014,open.data=="YES") %>% count
+data %>% filter(published<2014,open.data=="upon request") %>% count
+data %>% filter(published<2014,open.data=="unclear") %>% count
+
+data %>% filter(published>=2014) %>% count
+data %>% filter(published>=2014,open.data=="YES") %>% count
+data %>% filter(published>=2014,open.data=="upon request") %>% count
+data %>% filter(published>=2014,open.data=="unclear") %>% count
+
+```
+```{r,eco=FALSE}
+ai_no
+access <- c("YES","upon request","unclear")
+psy <- c(8,2,5)
+neuro <- c(4,1,10)
+ai <- c(11,2,2)
+
+table <- data.frame("open access"=access,"Cognitive Psychology"=psy,"Cognitive Neuropsychology"=neuro,"Artificial Intelligence"=ai)
+
+year <- c("<2014",">=2014")
+
+table2 <- data.frame("published"=year,"YES"=c(4,19),"upon request"=c(0,5),"unclear"=c(16,1))
+
+table
+table2
+```
+
