@@ -60,10 +60,12 @@ psy <- c(8,2,5)
 neuro <- c(4,1,10)
 ai <- c(11,2,2)
 
+# table displaying the counts of open access in the respective categories
 table <- data.frame("open access"=access,"Cognitive Psychology"=psy,"Cognitive Neuropsychology"=neuro,"Artificial Intelligence"=ai)
 
 year <- c("<2014",">=2014")
 
+# table displaying the counts of open access before and after the year 2014
 table2 <- data.frame("published"=year,"YES"=c(4,19),"upon request"=c(0,5),"unclear"=c(16,1))
 
 table
